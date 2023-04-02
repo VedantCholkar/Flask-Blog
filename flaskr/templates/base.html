@@ -1,0 +1,31 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} - Flaskr</title>
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+<nav class="navbar is-info">
+  <div class="navbar-brand"><a href='/' class="navbar-item title">Flaskr</a></div>
+  <ul class="navbar-menu">
+    <div class="navbar-end">
+      {% if g.user %}
+        <li class="navbar-item"><span class="subtitle is-4 has-text-white">{{ g.user['username'] }}</span>
+        <li class="navbar-item"><a href="{{ url_for('auth.logout') }}" class="button is-primary is-danger">Log Out</a>
+      {% else %}
+      <div class="buttons">
+        <li class="navbar-item"><a href="{{ url_for('auth.register') }}" class="button is-primary">Register</a>
+        <li class="navbar-item"><a href="{{ url_for('auth.login') }}" class="button is-primary is-light">Log In</a>
+      </div>
+      {% endif %}
+    </div>
+  </ul>
+</nav>
+<div class="is-flex is-flex-direction-column is-flex-wrap-wrap is-justify-content-center is-align-items-center">
+  <div class="column">
+    <header class="title">
+      {% block header %}{% endblock %}
+    </header>
+    {% for message in get_flashed_messages() %}
+    <div class="message is-danger"><div class="message-header">{{ message }}</div></div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </div>
+</div>
